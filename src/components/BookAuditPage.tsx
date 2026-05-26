@@ -95,10 +95,75 @@ export default function BookAuditPage() {
 
   const copyProposalToClipboard = () => {
     if (!auditResult) return;
-    navigator.clipboard.writeText(auditResult.draftProposal);
+    navigator.clipboard.writeText(normalizeProposalMarkdown(auditResult.draftProposal));
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  const normalizeProposalMarkdown = (markdown: string) => markdown.replace(/\\n/g, "\n").trim();
+
+  const renderInlineMarkdown = (text: string) => {
+    const parts = text.split(/(\*\*[^*]+\*\*)/g);
+
+    return parts.map((part, index) => {
+      if (part.startsWith("**") && part.endsWith("**")) {
+        return (
+          <strong key={`${part}-${index}`} className="font-bold text-white">
+            {part.slice(2, -2)}
+          </strong>
+        );
+      }
+
+      return part;
+    });
+  };
+
+  const renderProposalMarkdown = (markdown: string) => {
+    const lines = normalizeProposalMarkdown(markdown).split("\n");
+
+    return lines.map((line, index) => {
+      const trimmedLine = line.trim();
+
+      if (!trimmedLine) {
+        return <div key={`space-${index}`} className="h-3" />;
+      }
+
+      if (trimmedLine.startsWith("# ")) {
+        return (
+          <h3 key={index} className="font-display text-xl md:text-2xl font-black text-white leading-tight mb-4">
+            {trimmedLine.replace(/^#\s+/, "")}
+          </h3>
+        );
+      }
+
+      if (trimmedLine.startsWith("## ")) {
+        return (
+          <h4 key={index} className="font-display text-base md:text-lg font-bold text-brand-purple mt-5 mb-2">
+            {trimmedLine.replace(/^##\s+/, "")}
+          </h4>
+        );
+      }
+
+      if (/^[-*]\s+/.test(trimmedLine)) {
+        return (
+          <div key={index} className="flex items-start gap-2 text-xs md:text-sm text-white/75 leading-relaxed mb-2">
+            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-purple" />
+            <span>{renderInlineMarkdown(trimmedLine.replace(/^[-*]\s+/, ""))}</span>
+          </div>
+        );
+      }
+
+      return (
+        <p key={index} className="text-xs md:text-sm text-white/70 leading-relaxed mb-3">
+          {renderInlineMarkdown(trimmedLine)}
+        </p>
+      );
+    });
+  };
+
+  const gmailBookingUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=shahirsheikh936@gmail.com&su=${encodeURIComponent(
+    `HashLink operational audit for ${form.companyName || "your company"}`
+  )}`;
 
   // Static timeline tracking
   const timelineSteps = [
@@ -435,8 +500,8 @@ export default function BookAuditPage() {
                         )}
                       </button>
                     </div>
-                    <div className="p-6 bg-[#04060d]/80 border border-white/5 rounded-2xl max-h-72 overflow-y-auto font-mono text-xs text-white/70 leading-relaxed text-left whitespace-pre-wrap select-text">
-                      {auditResult.draftProposal}
+                    <div className="p-6 bg-[#04060d]/80 border border-white/5 rounded-2xl max-h-[30rem] overflow-y-auto text-left select-text">
+                      {renderProposalMarkdown(auditResult.draftProposal)}
                     </div>
                   </div>
 
@@ -448,7 +513,9 @@ export default function BookAuditPage() {
                       <p className="text-xs text-white/50 max-w-sm leading-relaxed">Schedule a direct workshop to refine these generated findings into active sprint milestones.</p>
                     </div>
                     <a
-                      href={`mailto:shahirsheikh936@gmail.com?subject=HashLink%20operational%20audit%20for%20${form.companyName}`}
+                      href={gmailBookingUrl}
+                      target="_blank"
+                      rel="noreferrer"
                       className="px-6 py-3 shrink-0 rounded-xl bg-brand-purple hover:bg-opacity-95 text-white font-mono text-xs uppercase tracking-widest shadow-md transition-all flex items-center gap-2"
                     >
                       Lock In Booking Slot

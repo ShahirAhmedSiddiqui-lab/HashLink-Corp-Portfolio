@@ -123,17 +123,27 @@ export default function MembersSection() {
                   {/* Dynamic hovering spotlight */}
                   <div className="absolute w-28 h-28 rounded-full bg-brand-purple/10 filter blur-xl transition-all duration-700 scale-95 group-hover:scale-125 group-hover:bg-[#9F8EFF]/15" />
                   
-                  {/* Large Stylized Indicator Icon Symbol */}
-                  <div className="relative font-display text-6xl select-none group-hover:scale-115 group-hover:rotate-6 transition-transform duration-500 ease-out">
-                    {member.avatarUrl}
+                  {/* Member avatar image */}
+                  <div className="relative z-10 w-[78%] aspect-square max-h-[185px] overflow-hidden rounded-[1.5rem] border border-white/10 bg-[#0D1020] shadow-[0_24px_70px_rgba(0,0,0,0.35)] transition-all duration-500 group-hover:scale-105 group-hover:border-brand-purple/40">
+                    <img
+                      src={member.avatarSrc}
+                      alt={member.name}
+                      loading="lazy"
+                      className="h-full w-full object-cover"
+                      onError={(event) => {
+                        event.currentTarget.style.display = "none";
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#080916]/45 via-transparent to-white/5 pointer-events-none" />
+                    <div className="absolute inset-0 flex items-center justify-center font-display text-4xl font-black text-white/20 -z-10">
+                      {member.name
+                        .split(" ")
+                        .map((part) => part[0])
+                        .join("")
+                        .slice(0, 2)}
+                    </div>
                   </div>
 
-                  {/* Dynamic active radar dot top-right corner */}
-                  <div className="absolute top-4 right-4 flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/20">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-                    <span className="font-mono text-[7.5px] text-emerald-300 uppercase tracking-widest leading-none">ACTIVE</span>
-                  </div>
-  
                   {/* Minimal tech badge identifier */}
                   <div className="absolute bottom-3 left-6 font-mono text-[8.5px] text-white/30 uppercase tracking-widest">
                     REF_KEY: {member.id.toUpperCase()}

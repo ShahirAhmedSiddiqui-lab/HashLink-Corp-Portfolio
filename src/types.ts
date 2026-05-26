@@ -18,7 +18,7 @@ export interface TeamMember {
   responseTime: string;
   github?: string;
   linkedin?: string;
-  avatarUrl: string; // We will design custom premium avatars or layouts
+  avatarSrc: string; // Path to team member avatar image
 }
 
 export interface CaseStudy {

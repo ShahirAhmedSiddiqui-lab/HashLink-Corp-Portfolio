@@ -45,7 +45,7 @@ const promptSchema = {
     },
     draftProposal: {
       type: Type.STRING,
-      description: "A formal draft proposal formatted in clean markdown. Section headers should outline: Project Boundary, Phase Milestones, Scope of Deliverables, and Commercial Terms.",
+      description: "A polished 650-900 word client-ready markdown proposal with the exact sections: Executive Diagnosis, Proposed Automation System, Scope of Deliverables, Implementation Milestones, Expected ROI, Client Inputs Required, and Commercial Next Step. It must be specific to the user's company, bottleneck, industry, team size, and tech stack.",
     },
   },
   required: ["executiveSummary", "findings", "blueprintSteps", "estimatedReturn", "draftProposal"],
@@ -87,14 +87,33 @@ In addition, construct a sequential 4-step flowchart structure (blueprintSteps) 
 
 Calculate precise estimated numeric returns based on their size and industry benchmarks.
 
-Finally, write an elite executive proposal as a formal draft from HashLink Corp. styled as markdown. The text fields should feel premium, elite, highly analytical, and technically sophisticated (incorporating systems-level language).`;
+Finally, write draftProposal as a polished, client-ready markdown proposal from HashLink Corp. It should be specific to the user's inputs, commercially useful, and ready to copy into Gmail after light human review.
+
+Use this exact markdown structure:
+# HashLink Operational Automation Proposal for ${companyName}
+## 1. Executive Diagnosis
+Write 2 concise paragraphs describing the business leak, operational drag, and why it matters financially.
+## 2. Proposed Automation System
+Describe the recommended system architecture in concrete terms, including triggers, integrations, data flow, AI/agent responsibilities, and human approval points.
+## 3. Scope of Deliverables
+List 5-7 bullet points covering exactly what HashLink would build.
+## 4. Implementation Milestones
+Create a 3-phase plan with week ranges, outcomes, and acceptance criteria.
+## 5. Expected ROI
+Summarize expected weekly hours saved, monthly savings, and annual ROI. Explain the assumptions behind the estimate without pretending the numbers are guaranteed.
+## 6. Client Inputs Required
+List the access, documents, accounts, sample data, and stakeholder decisions needed before implementation.
+## 7. Commercial Next Step
+End with a confident invitation to book the strategy call and validate scope.
+
+Keep the proposal between 650 and 900 words. Avoid generic filler, fake guarantees, legal boilerplate, and vague phrases like "cutting-edge solutions".`;
 
   try {
     const response = await aiClient.models.generateContent({
       model: "gemini-3.5-flash",
       contents: prompt,
       config: {
-        systemInstruction: "You are the Chief AI Architect and Managing Partner of HashLink Corp., a legendary digital engineering studio. Your advice is elite, highly precise, ROI-focused, and free of generic fluff or sales-pitch clichés. Your tone is academic yet commercially aggressive: technical, authoritative, and direct.",
+        systemInstruction: "You are the Chief AI Architect and Managing Partner of HashLink Corp., a premium AI automation and software engineering studio. Your advice is precise, ROI-focused, grounded in the user's inputs, and free of generic fluff or sales-pitch cliches. Your tone is technical, authoritative, commercially sharp, and practical. When writing markdown, produce clean client-ready copy with strong headings, bullets where useful, and no placeholder text.",
         responseMimeType: "application/json",
         responseSchema: promptSchema,
       },

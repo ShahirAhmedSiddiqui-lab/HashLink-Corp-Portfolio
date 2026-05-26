@@ -59,7 +59,7 @@ export const MEMBERS_DATA: TeamMember[] = [
     responseTime: "< 15 mins",
     github: "http://github.com/",
     linkedin: "https://www.linkedin.com/",
-    avatarUrl: "🏆"
+    avatarSrc: "/team/shaheer-siddiqui.jpeg"
   },
   {
     id: "member-2",
@@ -71,7 +71,7 @@ export const MEMBERS_DATA: TeamMember[] = [
     responseTime: "< 30 mins",
     github: "http://github.com/",
     linkedin: "https://www.linkedin.com/",
-    avatarUrl: "💻"
+    avatarSrc: "/team/ahmed-raza.jpeg"
   },
   {
     id: "member-3",
@@ -83,7 +83,7 @@ export const MEMBERS_DATA: TeamMember[] = [
     responseTime: "< 1 hour",
     github: "http://github.com/",
     linkedin: "https://www.linkedin.com/",
-    avatarUrl: "🤖"
+    avatarSrc: "/team/naveed-zahir.jpeg"
   },
   {
     id: "member-4",
@@ -95,7 +95,7 @@ export const MEMBERS_DATA: TeamMember[] = [
     responseTime: "< 2 hours",
     github: "http://github.com/",
     linkedin: "https://www.linkedin.com/",
-    avatarUrl: "✨"
+    avatarSrc: "/team/muhammad-waqas.jpeg"
   }
 ];
 
