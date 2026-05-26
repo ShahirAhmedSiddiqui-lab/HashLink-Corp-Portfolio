@@ -121,10 +121,22 @@ Finally, write an elite executive proposal as a formal draft from HashLink Corp.
         throw new Error("No response generated from the AI model.");
       }
 
-      res.json(JSON.parse(text.trim()));
+      let parsedResponse;
+      try {
+        parsedResponse = JSON.parse(text.trim());
+      } catch (parseError: any) {
+        console.error("JSON Parse Error - Raw Response:", text);
+        throw new Error(`Invalid JSON response from Gemini: ${parseError.message}`);
+      }
+
+      res.json(parsedResponse);
     } catch (error: any) {
       console.error("Express Audit Route Error:", error);
-      res.status(500).json({ error: error.message || "An error occurred during audit synthesis. Make sure GEMINI_API_KEY is configured." });
+      const statusCode = error.message?.includes("missing") ? 400 : 500;
+      res.status(statusCode).json({ 
+        error: error.message || "An error occurred during audit synthesis. Make sure GEMINI_API_KEY is configured.",
+        debug: process.env.NODE_ENV === "development" ? error.stack : undefined
+      });
     }
   });
 
