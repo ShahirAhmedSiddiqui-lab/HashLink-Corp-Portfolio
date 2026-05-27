@@ -1,11 +1,11 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function CustomCursor() {
-  const [position, setPosition] = useState({ x: -100, y: -100 });
   const [isMoved, setIsMoved] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
   const followerRef = useRef<HTMLDivElement>(null);
+  const dotRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Disable on mobile/touch screens
@@ -16,19 +16,34 @@ export default function CustomCursor() {
     let targetY = 0;
     let currentX = 0;
     let currentY = 0;
+    let animationFrame = 0;
+    let moved = false;
 
     const handleMouseMove = (e: MouseEvent) => {
       targetX = e.clientX;
       targetY = e.clientY;
-      if (!isMoved) {
+      if (!moved) {
+        moved = true;
         setIsMoved(true);
         currentX = e.clientX;
         currentY = e.clientY;
       }
     };
 
-    const handleMouseLeave = () => {
+    const handleDocumentLeave = () => {
       setIsHovered(false);
+    };
+
+    const isHoverable = (target: EventTarget | null) => {
+      return target instanceof Element && Boolean(target.closest('button, a, input, select, textarea, [role="button"], .hover-ring-expand'));
+    };
+
+    const handlePointerOver = (e: PointerEvent) => {
+      if (isHoverable(e.target)) setIsHovered(true);
+    };
+
+    const handlePointerOut = (e: PointerEvent) => {
+      if (isHoverable(e.target) && !isHoverable(e.relatedTarget)) setIsHovered(false);
     };
 
     // Smooth lerp calculations for cinematic delay
@@ -37,43 +52,39 @@ export default function CustomCursor() {
       currentX += (targetX - currentX) * ease;
       currentY += (targetY - currentY) * ease;
 
-      setPosition({ x: currentX, y: currentY });
+      if (followerRef.current) {
+        followerRef.current.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+      }
 
-      requestAnimationFrame(animate);
-    };
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+      }
 
-    // Global listeners for hoverable categories
-    const addHoverListeners = () => {
-      const hoverables = document.querySelectorAll('button, a, input, select, textarea, [role="button"], .hover-ring-expand');
-      hoverables.forEach((el) => {
-        el.addEventListener("mouseenter", () => setIsHovered(true));
-        el.addEventListener("mouseleave", () => setIsHovered(false));
-      });
+      animationFrame = requestAnimationFrame(animate);
     };
 
     const handleMouseDown = () => setIsClicking(true);
     const handleMouseUp = () => setIsClicking(false);
 
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mousedown", handleMouseDown);
-    window.addEventListener("mouseup", handleMouseUp);
-    document.addEventListener("mouseleave", handleMouseLeave);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    window.addEventListener("mousedown", handleMouseDown, { passive: true });
+    window.addEventListener("mouseup", handleMouseUp, { passive: true });
+    document.addEventListener("mouseleave", handleDocumentLeave, { passive: true });
+    document.addEventListener("pointerover", handlePointerOver, { passive: true });
+    document.addEventListener("pointerout", handlePointerOut, { passive: true });
 
-    const animationFrame = requestAnimationFrame(animate);
-
-    // Initial check & interval to re-attach hover listeners on DOM update
-    addHoverListeners();
-    const interval = setInterval(addHoverListeners, 1500);
+    animationFrame = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mouseup", handleMouseUp);
-      document.removeEventListener("mouseleave", handleMouseLeave);
+      document.removeEventListener("mouseleave", handleDocumentLeave);
+      document.removeEventListener("pointerover", handlePointerOver);
+      document.removeEventListener("pointerout", handlePointerOut);
       cancelAnimationFrame(animationFrame);
-      clearInterval(interval);
     };
-  }, [isMoved]);
+  }, []);
 
   if (!isMoved) return null;
 
@@ -83,16 +94,13 @@ export default function CustomCursor() {
       <div
         ref={followerRef}
         className="fixed top-0 left-0 pointer-events-none z-50 mix-blend-screen -translate-x-1/2 -translate-y-1/2 transition-transform duration-300 pointer-hidden"
-        style={{
-          transform: `translate3d(${position.x}px, ${position.y}px, 0) scale(${isHovered ? 1.6 : 1})`,
-        }}
       >
         <div
           className={`w-10 h-10 rounded-full border transition-all duration-300 ${
             isClicking
               ? "border-purple-400 bg-brand-purple/20 scale-75"
-              : isHovered
-              ? "border-purple-300 bg-brand-purple/10"
+            : isHovered
+              ? "border-purple-300 bg-brand-purple/10 scale-150"
               : "border-brand-purple/40"
           }`}
         />
@@ -100,12 +108,10 @@ export default function CustomCursor() {
 
       {/* Instant Laser Center Dot */}
       <div
+        ref={dotRef}
         className="fixed top-0 left-0 pointer-events-none z-50 mix-blend-screen -translate-x-1/2 -translate-y-1/2 transition-transform duration-75"
-        style={{
-          transform: `translate3d(${position.x}px, ${position.y}px, 0) scale(${isClicking ? 0.5 : 1})`,
-        }}
       >
-        <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full shadow-[0_0_10px_#7DE2FC,0_0_20px_#6C63FF]" />
+        <div className={`w-1.5 h-1.5 bg-cyan-400 rounded-full shadow-[0_0_10px_#7DE2FC,0_0_20px_#6C63FF] transition-transform duration-75 ${isClicking ? "scale-50" : "scale-100"}`} />
       </div>
     </>
   );

@@ -17,7 +17,7 @@
   .glass-card {
     background: rgba(13, 16, 32, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(12px);
     border-radius: 32px;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -135,4 +135,230 @@ body {
   animation-play-state: paused;
 }
 
+/* ========== MOBILE-FIRST RESPONSIVE UTILITIES ========== */
+
+/* Small screens: 320px - 544px */
+@media (max-width: 544px) {
+  /* Container responsive padding */
+  .max-w-\[1440px\] {
+    @apply mx-auto px-4 sm:px-6;
+  }
+
+  /* Typography scaling */
+  .text-7xl {
+    @apply text-3xl sm:text-4xl;
+  }
+
+  .text-5xl {
+    @apply text-2xl sm:text-3xl;
+  }
+
+  .text-4xl {
+    @apply text-xl sm:text-2xl;
+  }
+
+  .text-lg {
+    @apply text-base;
+  }
+
+  /* Spacing cleanup */
+  .py-32 {
+    @apply py-16 sm:py-24;
+  }
+
+  .py-24 {
+    @apply py-12 sm:py-20;
+  }
+
+  .py-20 {
+    @apply py-10 sm:py-16;
+  }
+
+  .py-16 {
+    @apply py-8 sm:py-12;
+  }
+
+  .px-\[40px\] {
+    @apply px-4 sm:px-6;
+  }
+
+  .gap-12 {
+    @apply gap-6 sm:gap-8;
+  }
+
+  .gap-8 {
+    @apply gap-4 sm:gap-6;
+  }
+
+  .mb-20 {
+    @apply mb-10 sm:mb-16;
+  }
+
+  /* Button responsive sizing */
+  .btn-primary {
+    @apply px-5 py-2.5 text-xs sm:px-7 sm:py-3;
+  }
+
+  .btn-primary:hover {
+    @apply translate-y-0 sm:-translate-y-1;
+  }
+
+  /* Grid responsive */
+  .grid-cols-12 {
+    @apply grid-cols-1;
+  }
+
+  .grid-cols-3 {
+    @apply grid-cols-1 sm:grid-cols-2;
+  }
+
+  .grid-cols-4 {
+    @apply grid-cols-2;
+  }
+
+  .md\:col-span-7,
+  .md\:col-span-5,
+  .md\:col-span-4,
+  .md\:col-span-6,
+  .md\:col-span-3 {
+    @apply col-span-1;
+  }
+
+  .md\:text-right {
+    @apply text-left;
+  }
+
+  /* Glass card responsive */
+  .glass-card {
+    @apply p-3 sm:p-4;
+    border-radius: 20px;
+  }
+
+  /* Reduce font sizes for nav */
+  nav {
+    @apply text-xs;
+  }
+
+  /* Prevent layout shift on mobile */
+  .md\:justify-end {
+    @apply justify-start;
+  }
+
+  /* Form inputs base size for mobile */
+  input,
+  textarea,
+  select {
+    @apply text-base;
+    font-size: 16px;
+  }
+
+  /* Heading responsive */
+  h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+  }
+
+  /* Prevent overflow on small screens */
+  * {
+    max-width: 100vw;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+}
+
+/* Extra small phones: 320px - 360px */
+@media (max-width: 360px) {
+  body {
+    font-size: 12px;
+  }
+
+  .text-7xl {
+    @apply text-2xl;
+  }
+
+  .text-5xl {
+    @apply text-xl;
+  }
+
+  .text-4xl {
+    @apply text-base;
+  }
+
+  .font-mono {
+    @apply text-[9px];
+  }
+
+  .btn-primary {
+    @apply px-4 py-2 text-[9px] gap-2;
+  }
+
+  .glass-card {
+    @apply p-2 rounded-lg;
+    gap: 0.5rem;
+  }
+
+  .gap-8 {
+    @apply gap-2;
+  }
+
+  .gap-6 {
+    @apply gap-2;
+  }
+
+  .mb-20 {
+    @apply mb-6;
+  }
+
+  .py-32 {
+    @apply py-12;
+  }
+}
+
+/* Tablets: 545px - 768px */
+@media (min-width: 545px) and (max-width: 768px) {
+  .max-w-\[1440px\] {
+    @apply mx-auto px-6;
+  }
+
+  .text-7xl {
+    @apply text-4xl;
+  }
+
+  .text-5xl {
+    @apply text-3xl;
+  }
+
+  .py-32 {
+    @apply py-24;
+  }
+
+  .gap-12 {
+    @apply gap-8;
+  }
+
+  .btn-primary {
+    @apply px-6 py-3 text-xs;
+  }
+}
+
+/* Very small text sizes */
+.text-xs {
+  @apply text-[11px];
+}
+
+/* Responsive font mono */
+@media (max-width: 544px) {
+  .font-mono {
+    @apply text-xs sm:text-sm;
+  }
+
+  .tracking-widest {
+    letter-spacing: 0.05em;
+  }
+
+  .tracking-wide {
+    letter-spacing: 0.02em;
+  }
+}
 

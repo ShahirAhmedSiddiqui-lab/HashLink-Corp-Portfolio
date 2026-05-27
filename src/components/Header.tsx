@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ArrowRight, Layout, Menu, X } from "lucide-react";
 import HashLinkLogo from "./HashLinkLogo";
 
@@ -11,26 +11,25 @@ interface HeaderProps {
 export default function Header({ currentPage, setCurrentPage, activeSection }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const progressRef = useRef<HTMLDivElement>(null);
+  const isScrolledRef = useRef(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
+      const nextIsScrolled = window.scrollY > 20;
+      if (nextIsScrolled !== isScrolledRef.current) {
+        isScrolledRef.current = nextIsScrolled;
+        setIsScrolled(nextIsScrolled);
       }
 
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalHeight > 0) {
-        const progress = (window.scrollY / totalHeight) * 100;
-        setScrollProgress(progress);
-      } else {
-        setScrollProgress(0);
+      const progress = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
+      if (progressRef.current) {
+        progressRef.current.style.width = `${progress}%`;
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll(); // Initial computation
 
     return () => window.removeEventListener("scroll", handleScroll);
@@ -63,19 +62,20 @@ export default function Header({ currentPage, setCurrentPage, activeSection }: H
     <header
       className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ${
         isScrolled
-          ? "bg-bg-dark/80 backdrop-blur-xl border-b border-white/5 py-4"
+          ? "bg-bg-dark/85 backdrop-blur-md border-b border-white/5 py-4"
           : "bg-transparent py-6"
       }`}
     >
       {/* Scroll Progress Bar */}
       <div className="absolute top-0 left-0 w-full h-[3.5px] bg-white/5 z-55 pointer-events-none">
         <div 
+          ref={progressRef}
           className="h-full bg-gradient-to-r from-brand-purple via-[#9F8EFF] to-cyan-400 shadow-[0_0_12px_#6C63FF] transition-all duration-150 ease-out"
-          style={{ width: `${scrollProgress}%` }}
+          style={{ width: "0%" }}
         />
       </div>
 
-      <div className="max-w-[1440px] mx-auto px-[40px] flex items-center justify-between">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-[40px] flex items-center justify-between">
         {/* Logo Text Block */}
         <div 
           onClick={() => {

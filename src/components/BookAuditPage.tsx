@@ -161,7 +161,7 @@ export default function BookAuditPage() {
     });
   };
 
-  const gmailBookingUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=shahirsheikh936@gmail.com&su=${encodeURIComponent(
+  const gmailBookingUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=hashlink.corp@gmail.com&su=${encodeURIComponent(
     `HashLink operational audit for ${form.companyName || "your company"}`
   )}`;
 
@@ -176,10 +176,10 @@ export default function BookAuditPage() {
   return (
     <div ref={sectionRef} className="relative min-h-screen pt-32 pb-24 bg-radial-grid select-none overflow-hidden">
       {/* Background radial glowing effects */}
-      <div className="absolute left-1/4 top-1/4 w-[500px] h-[500px] bg-brand-purple/5 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute right-1/4 bottom-1/4 w-[400px] h-[400px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute left-1/4 top-1/4 w-[420px] h-[420px] bg-brand-purple/5 rounded-full blur-[90px] pointer-events-none" />
+      <div className="absolute right-1/4 bottom-1/4 w-[360px] h-[360px] bg-cyan-500/5 rounded-full blur-[80px] pointer-events-none" />
 
-      <div className="max-w-[1440px] mx-auto px-[40px] relative z-10">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-[40px] relative z-10">
         
         {/* Editorial Title */}
         <div className="text-center max-w-3xl mx-auto mb-20 text-left">

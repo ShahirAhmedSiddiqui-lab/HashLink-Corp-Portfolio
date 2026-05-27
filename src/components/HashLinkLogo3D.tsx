@@ -2,10 +2,16 @@ import { useState, useEffect, useRef } from "react";
 
 export default function HashLinkLogo3D({ className = "w-72 h-72" }: { className?: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [rotate, setRotate] = useState({ x: 0, y: 0 });
+  const logoRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
+    let animationFrame = 0;
+    let targetRotateX = 0;
+    let targetRotateY = 0;
+    let currentRotateX = 0;
+    let currentRotateY = 0;
+
     const handleMouseMove = (e: MouseEvent) => {
       if (!containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
@@ -15,14 +21,24 @@ export default function HashLinkLogo3D({ className = "w-72 h-72" }: { className?
       const y = (e.clientY - centerY) / (rect.height / 2); // range [-1, 1]
 
       // Slow, weighted dampening for cinematic motion
-      setRotate({
-        x: y * -15, // tilt up/down
-        y: x * 15,  // tilt left/right
-      });
+      targetRotateX = y * -15; // tilt up/down
+      targetRotateY = x * 15;  // tilt left/right
     };
 
     const handleMouseLeave = () => {
-      setRotate({ x: 0, y: 0 });
+      targetRotateX = 0;
+      targetRotateY = 0;
+    };
+
+    const animate = () => {
+      currentRotateX += (targetRotateX - currentRotateX) * 0.12;
+      currentRotateY += (targetRotateY - currentRotateY) * 0.12;
+
+      if (logoRef.current) {
+        logoRef.current.style.transform = `rotateX(${currentRotateX}deg) rotateY(${currentRotateY}deg) translateZ(30px)`;
+      }
+
+      animationFrame = requestAnimationFrame(animate);
     };
 
     const element = containerRef.current;
@@ -30,9 +46,11 @@ export default function HashLinkLogo3D({ className = "w-72 h-72" }: { className?
       window.addEventListener("mousemove", handleMouseMove);
       element.addEventListener("mouseleave", handleMouseLeave);
     }
+    animationFrame = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+      cancelAnimationFrame(animationFrame);
       if (element) {
         element.removeEventListener("mouseleave", handleMouseLeave);
       }
@@ -75,9 +93,10 @@ export default function HashLinkLogo3D({ className = "w-72 h-72" }: { className?
 
       {/* Overlapping glass logo element */}
       <div
+        ref={logoRef}
         className="w-[85%] h-[85%] transition-transform duration-500 ease-out flex items-center justify-center"
         style={{
-          transform: `rotateX(${rotate.x}deg) rotateY(${rotate.y}deg) translateZ(30px)`,
+          transform: "rotateX(0deg) rotateY(0deg) translateZ(30px)",
           transformStyle: "preserve-3d",
         }}
       >

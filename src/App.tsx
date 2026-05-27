@@ -19,6 +19,7 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState<"home" | "book-audit">("home");
   const [activeSection, setActiveSection] = useState("home");
   const lenisRef = useRef<Lenis | null>(null);
+  const activeSectionRef = useRef("home");
 
   // Initialize Lenis Hardware Accelerated Scrolling
   useEffect(() => {
@@ -37,14 +38,16 @@ export default function App() {
     lenis.on("scroll", ScrollTrigger.update);
 
     // Provide RAF for GSAP + Lenis synchronized ticker
-    gsap.ticker.add((time) => {
+    const updateLenis = (time: number) => {
       lenis.raf(time * 1000);
-    });
+    };
+
+    gsap.ticker.add(updateLenis);
     gsap.ticker.lagSmoothing(0);
 
     return () => {
+      gsap.ticker.remove(updateLenis);
       lenis.destroy();
-      gsap.ticker.remove((time) => lenis.raf(time * 1000));
     };
   }, []);
 
@@ -63,14 +66,17 @@ export default function App() {
           const top = el.offsetTop;
           const height = el.offsetHeight;
           if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(sect);
+            if (activeSectionRef.current !== sect) {
+              activeSectionRef.current = sect;
+              setActiveSection(sect);
+            }
             break;
           }
         }
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     // Trigger on active mount
     handleScroll();
 

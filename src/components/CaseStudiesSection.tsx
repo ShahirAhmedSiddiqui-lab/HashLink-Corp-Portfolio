@@ -35,7 +35,7 @@ export default function CaseStudiesSection() {
             trigger: sectionRef.current,
             start: "top 75%",
             end: "top 30%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           },
         }
       );
@@ -56,9 +56,9 @@ export default function CaseStudiesSection() {
   return (
     <section id="portfolio" ref={sectionRef} className="relative py-32 overflow-hidden bg-radial-grid border-t border-white/5">
       {/* Visual neon light sphere */}
-      <div className="absolute left-0 top-1/2 w-[300px] h-[300px] bg-cyan-500/5 rounded-full blur-[110px] pointer-events-none" />
+      <div className="absolute left-0 top-1/2 w-[280px] h-[280px] bg-cyan-500/5 rounded-full blur-[80px] pointer-events-none" />
 
-      <div className="max-w-[1440px] mx-auto px-[40px]">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-[40px]">
         
         {/* Section Header */}
         <div className="mb-20 text-left md:max-w-2xl">
@@ -118,12 +118,12 @@ export default function CaseStudiesSection() {
           <div className="lg:col-span-8">
             <div 
               className={`glass-card border border-white/10 rounded-3xl p-8 md:p-10 text-left relative overflow-hidden bg-bg-card/40 transition-all duration-300 ${
-                isTransitioning ? "opacity-30 scale-[0.99] translate-y-1 blur-[3px]" : "opacity-100 scale-100 translate-y-0 blur-0"
+                isTransitioning ? "opacity-35 scale-[0.99] translate-y-1" : "opacity-100 scale-100 translate-y-0"
               }`}
             >
               
               {/* Glass glowing diagonal shine */}
-              <div className="absolute top-0 right-0 w-80 h-80 bg-brand-purple/5 blur-[90px] rounded-full pointer-events-none" />
+              <div className="absolute top-0 right-0 w-72 h-72 bg-brand-purple/5 blur-[70px] rounded-full pointer-events-none" />
 
               {/* Lab Header meta */}
               <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-white/5 mb-8">

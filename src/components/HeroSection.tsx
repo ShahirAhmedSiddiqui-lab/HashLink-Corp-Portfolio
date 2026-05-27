@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { ArrowRight, Cpu, Layers, Play, Sparkles } from "lucide-react";
 import HashLinkLogo3D from "./HashLinkLogo3D";
 import gsap from "gsap";
@@ -12,7 +12,6 @@ export default function HeroSection({ setCurrentPage }: HeroSectionProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const headerTextRef = useRef<HTMLHeadingElement>(null);
-  const [metrics, setMetrics] = useState({ cpu: 18, ping: 12, uptime: "99.98" });
   
   // Track mouse coordinates to manipulate 3D perspective depth vectors in real time
   const mouseRef = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
@@ -61,6 +60,7 @@ export default function HeroSection({ setCurrentPage }: HeroSectionProps) {
     if (!ctx) return;
 
     let animationId: number;
+    let isVisible = true;
     let particles: {
       x: number;
       y: number;
@@ -72,11 +72,33 @@ export default function HeroSection({ setCurrentPage }: HeroSectionProps) {
     }[] = [];
 
     const resizeCanvas = () => {
-      canvas.width = containerRef.current?.clientWidth || window.innerWidth;
-      canvas.height = containerRef.current?.clientHeight || 850;
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      const width = containerRef.current?.clientWidth || window.innerWidth;
+      // Responsive canvas height based on screen size
+      const screenHeight = window.innerHeight;
+      let canvasHeight = 850;
+      
+      if (screenHeight < 500) {
+        canvasHeight = Math.min(400, screenHeight * 0.8);
+      } else if (screenHeight < 768) {
+        canvasHeight = Math.min(500, screenHeight * 0.85);
+      }
+      
+      const height = containerRef.current?.clientHeight || canvasHeight;
+
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
+    window.addEventListener("resize", resizeCanvas, { passive: true });
+
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+    }, { rootMargin: "200px" });
+    observer.observe(canvas);
 
     // Initialize premium soft volumetric floating elements
     const particleCount = 75;
@@ -95,14 +117,19 @@ export default function HeroSection({ setCurrentPage }: HeroSectionProps) {
     }
 
     const draw = () => {
+      if (!isVisible) {
+        animationId = requestAnimationFrame(draw);
+        return;
+      }
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       // Smooth lerp mouse calculations to prevent mechanical jumps
       mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * 0.08;
       mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * 0.08;
 
-      const halfWidth = canvas.width / 2;
-      const halfHeight = canvas.height / 2;
+      const halfWidth = canvas.clientWidth / 2;
+      const halfHeight = canvas.clientHeight / 2;
       const focalLength = 400; // virtual camera focal scope multiplier
 
       particles.forEach((p) => {
@@ -129,7 +156,7 @@ export default function HeroSection({ setCurrentPage }: HeroSectionProps) {
         const projectedSize = (p.size * focalLength) / p.z;
 
         // Render projected items if boundaries align
-        if (screenX >= 0 && screenX <= canvas.width && screenY >= 0 && screenY <= canvas.height) {
+        if (screenX >= 0 && screenX <= canvas.clientWidth && screenY >= 0 && screenY <= canvas.clientHeight) {
           ctx.beginPath();
           ctx.arc(screenX, screenY, Math.max(0.1, projectedSize), 0, Math.PI * 2);
           ctx.fillStyle = p.color;
@@ -141,15 +168,6 @@ export default function HeroSection({ setCurrentPage }: HeroSectionProps) {
         }
       });
 
-      // Quick fluctuation simulated network updates
-      if (Math.random() < 0.04) {
-        setMetrics({
-          cpu: Math.floor(Math.random() * 8 + 14),
-          ping: Math.floor(Math.random() * 3 + 11),
-          uptime: "99.98"
-        });
-      }
-
       animationId = requestAnimationFrame(draw);
     };
     draw();
@@ -157,6 +175,7 @@ export default function HeroSection({ setCurrentPage }: HeroSectionProps) {
     return () => {
       cancelAnimationFrame(animationId);
       window.removeEventListener("resize", resizeCanvas);
+      observer.disconnect();
     };
   }, []);
 
@@ -180,8 +199,8 @@ export default function HeroSection({ setCurrentPage }: HeroSectionProps) {
       
       {/* Absolute Ambient lights block (everswap.com high-contrast background vibes) */}
       <div className="absolute top-0 inset-x-0 h-[650px] bg-gradient-to-b from-[#101230]/40 via-transparent to-transparent pointer-events-none select-none" />
-      <div className="absolute -top-[250px] left-1/2 -translate-x-1/2 w-[850px] h-[550px] bg-brand-purple/10 rounded-full blur-[180px] pointer-events-none mesh-glow-1" />
-      <div className="absolute bottom-1/4 left-10 w-[350px] h-[350px] bg-cyan-500/5 rounded-full blur-[140px] pointer-events-none mesh-glow-2" />
+      <div className="absolute -top-[250px] left-1/2 -translate-x-1/2 w-[780px] h-[500px] bg-brand-purple/10 rounded-full blur-[110px] pointer-events-none mesh-glow-1" />
+      <div className="absolute bottom-1/4 left-10 w-[320px] h-[320px] bg-cyan-500/5 rounded-full blur-[80px] pointer-events-none mesh-glow-2" />
 
       {/* Volumetric Interactive Canvas Overlay */}
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-10 select-none brightness-110 opacity-90" />
@@ -189,9 +208,9 @@ export default function HeroSection({ setCurrentPage }: HeroSectionProps) {
       {/* Main Column Grid */}
       <section
         id="home"
-        className="relative min-h-[85vh] flex items-center justify-center pt-36 pb-20 select-none z-20 w-full"
+        className="relative min-h-[85vh] flex items-start justify-center pt-32 sm:pt-34 md:pt-36 pb-10 sm:pb-16 md:pb-20 select-none z-20 w-full"
       >
-        <div className="max-w-[1440px] mx-auto px-[40px] grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-20 w-full">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-[40px] grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-20 w-full">
           
           {/* Left Column: Premium Editorial Content Layout */}
           <div className="lg:col-span-7 flex flex-col gap-8 text-left">
@@ -263,10 +282,10 @@ export default function HeroSection({ setCurrentPage }: HeroSectionProps) {
           </div>
 
           {/* Right Column: Stunning Interactive 3D CSS Logo Visualizer with subtle cyan backdrop */}
-          <div className="lg:col-span-5 flex items-center justify-center py-6 relative">
-            <div className="absolute inset-0 bg-brand-purple/5 blur-[120px] rounded-full filter pointer-events-none select-none z-0 scale-90 animate-pulse" />
-            <div className="relative z-10 w-full flex items-center justify-center">
-              <HashLinkLogo3D className="w-72 h-72 sm:w-96 sm:h-96" />
+          <div className="lg:col-span-5 flex items-center justify-center py-6 relative lg:self-start">
+            <div className="absolute inset-x-0 top-10 mx-auto h-[min(28rem,80vw)] w-[min(28rem,80vw)] bg-brand-purple/5 blur-[70px] rounded-full pointer-events-none select-none z-0 scale-90 animate-pulse" />
+            <div className="relative z-10 w-full flex items-center justify-center lg:translate-x-4 xl:translate-x-8">
+              <HashLinkLogo3D className="w-72 h-72 sm:w-96 sm:h-96 lg:w-[28rem] lg:h-[28rem]" />
             </div>
           </div>
 

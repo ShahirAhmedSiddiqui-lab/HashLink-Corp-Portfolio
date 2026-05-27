@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 import { MEMBERS_DATA } from "../data";
-import { Github, Linkedin, Calendar, Flame } from "lucide-react";
+import { Calendar, Flame } from "lucide-react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
@@ -10,9 +10,19 @@ export default function MembersSection() {
   const deckRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    MEMBERS_DATA.forEach((member) => {
+      const image = new Image();
+      image.src = member.avatarSrc;
+      image.decode?.().catch(() => undefined);
+    });
+  }, []);
+
+  useEffect(() => {
     if (!sectionRef.current || !headerTextRef.current || !deckRef.current) return;
 
     const ctx = gsap.context(() => {
+      gsap.set(".member-card-wrapper", { willChange: "transform, opacity" });
+
       // 1. Massive Editorial Typographic Reveal (Clip-Path)
       gsap.fromTo(
         headerTextRef.current,
@@ -41,19 +51,22 @@ export default function MembersSection() {
       gsap.fromTo(
         cards,
         { 
-          y: 120, 
+          y: 80,
           opacity: 0, 
         },
         {
           y: 0,
           opacity: 1,
-          duration: 1.2,
-          stagger: 0.1,
-          ease: "back.out(1.4)",
+          duration: 0.95,
+          stagger: 0.08,
+          ease: "power3.out",
+          onComplete: () => {
+            gsap.set(cards, { willChange: "auto" });
+          },
           scrollTrigger: {
             trigger: deckRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
+            start: "top 85%",
+            toggleActions: "play none none none",
           },
         }
       );
@@ -80,9 +93,9 @@ export default function MembersSection() {
     <section id="members" ref={sectionRef} className="relative py-32 overflow-hidden bg-bg-dark border-t border-white/5 bg-radial-grid">
       
       {/* Background radial highlight */}
-      <div className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[550px] h-[550px] bg-brand-purple/5 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[420px] h-[420px] bg-brand-purple/5 rounded-full blur-[90px] pointer-events-none" />
 
-      <div className="max-w-[1440px] mx-auto px-[40px]">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-[40px]">
         
         {/* Section Title */}
         <div className="mb-12 grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
@@ -111,7 +124,7 @@ export default function MembersSection() {
             return (
               <div key={member.id} className="member-card-wrapper w-full md:w-auto relative">
                 <div
-                  className={`member-card glass-card hover:border-[#9F8EFF]/40 hover:shadow-[0_25px_60px_rgba(108,99,255,0.25)] rounded-[2.25rem] overflow-hidden flex flex-col group transition-all duration-500 ease-out relative border border-white/5 w-full md:w-[240px] lg:w-[265px] bg-[#080916]/85 backdrop-blur-xl shrink-0 ${cardPositionClass}`}
+                  className={`member-card hover:border-[#9F8EFF]/40 hover:shadow-[0_25px_60px_rgba(108,99,255,0.22)] rounded-[2.25rem] overflow-hidden flex flex-col group transition-all duration-500 ease-out relative border border-white/5 w-full md:w-[240px] lg:w-[265px] bg-[#080916]/95 shadow-[0_15px_40px_rgba(0,0,0,0.15)] shrink-0 transform-gpu ${cardPositionClass}`}
                 >
                   
                   {/* Member Visual Avatar Panel */}
@@ -121,14 +134,15 @@ export default function MembersSection() {
                   <div className="absolute top-0 inset-x-0 h-10 bg-gradient-to-b from-[#6C63FF]/15 to-transparent" />
                   
                   {/* Dynamic hovering spotlight */}
-                  <div className="absolute w-28 h-28 rounded-full bg-brand-purple/10 filter blur-xl transition-all duration-700 scale-95 group-hover:scale-125 group-hover:bg-[#9F8EFF]/15" />
+                  <div className="absolute w-28 h-28 rounded-full bg-brand-purple/10 blur-lg transition-all duration-700 scale-95 group-hover:scale-125 group-hover:bg-[#9F8EFF]/15" />
                   
                   {/* Member avatar image */}
                   <div className="relative z-10 w-[78%] aspect-square max-h-[185px] overflow-hidden rounded-[1.5rem] border border-white/10 bg-[#0D1020] shadow-[0_24px_70px_rgba(0,0,0,0.35)] transition-all duration-500 group-hover:scale-105 group-hover:border-brand-purple/40">
                     <img
                       src={member.avatarSrc}
                       alt={member.name}
-                      loading="lazy"
+                      loading="eager"
+                      decoding="async"
                       className="h-full w-full object-cover"
                       onError={(event) => {
                         event.currentTarget.style.display = "none";
@@ -197,31 +211,6 @@ export default function MembersSection() {
                   </div>
   
                 </div>
-  
-                {/* Invisible hover Social layer that slides in or unfolds */}
-                <div className="absolute top-4 left-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  {member.github && (
-                    <a
-                      href={member.github}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="p-2 border border-white/10 bg-bg-dark/90 hover:bg-brand-purple rounded-xl text-white/60 hover:text-white transition-all scale-95 hover:scale-110"
-                    >
-                      <Github className="w-3.5 h-3.5" />
-                    </a>
-                  )}
-                  {member.linkedin && (
-                    <a
-                      href={member.linkedin}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="p-2 border border-white/10 bg-bg-dark/90 hover:bg-brand-purple rounded-xl text-white/60 hover:text-white transition-all scale-95 hover:scale-110"
-                    >
-                      <Linkedin className="w-3.5 h-3.5" />
-                    </a>
-                  )}
-                </div>
-  
               </div>
               </div>
             );

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import * as LucideIcons from "lucide-react";
 import { SERVICES_DATA } from "../data";
 import { ServiceItem } from "../types";
@@ -6,8 +6,6 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
 export default function ServicesSection() {
-  const [activeCard, setActiveCard] = useState<string | null>(null);
-  
   const sectionRef = useRef<HTMLElement>(null);
   const headerTextRef = useRef<HTMLHeadingElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
@@ -16,6 +14,8 @@ export default function ServicesSection() {
     if (!sectionRef.current || !headerTextRef.current || !cardsRef.current) return;
 
     const ctx = gsap.context(() => {
+      gsap.set(".bento-service-card", { willChange: "transform, opacity" });
+
       // 1. Massive Editorial Typographic Reveal (Clip-Path)
       gsap.fromTo(
         headerTextRef.current,
@@ -44,21 +44,24 @@ export default function ServicesSection() {
       gsap.fromTo(
         cards,
         { 
-          y: 80, 
+          y: 64,
           opacity: 0, 
-          scale: 0.95 
+          scale: 0.98
         },
         {
           y: 0,
           opacity: 1,
           scale: 1,
-          duration: 1,
-          stagger: 0.1,
-          ease: "back.out(1.2)",
+          duration: 0.85,
+          stagger: 0.08,
+          ease: "power3.out",
+          onComplete: () => {
+            gsap.set(cards, { willChange: "auto" });
+          },
           scrollTrigger: {
             trigger: cardsRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
+            start: "top 85%",
+            toggleActions: "play none none none",
           },
         }
       );
@@ -79,7 +82,7 @@ export default function ServicesSection() {
 
   return (
     <section id="services" ref={sectionRef} className="relative py-32 overflow-hidden bg-bg-dark border-t border-white/5 bg-radial-grid">
-      <div className="max-w-[1440px] mx-auto px-[40px]">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-[40px]">
         
         {/* Section Header */}
         <div className="mb-20 grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
@@ -104,29 +107,26 @@ export default function ServicesSection() {
         </div>
 
         {/* Bento Grid Configuration */}
-        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6">
           {SERVICES_DATA.map((item, index) => {
-            // Give specific cards different span configurations to create the asymmetrical grid feel
+            // Give specific cards different configurations for asymmetrical feel
             let spanClass = "";
-            if (index === 2) spanClass = "md:col-span-2 lg:col-span-1";
-            else if (index === 3) spanClass = "md:col-span-1 lg:col-span-2";
-            else if (index === 4) spanClass = "md:col-span-2 lg:col-span-1";
+            let minHeightClass = "min-h-[330px]";
+            
+            // Make AI chatbots card (index 3) small
+            if (index === 3) {
+              spanClass = "lg:col-span-1";
+              minHeightClass = "min-h-[260px]";
+            }
             
             return (
               <div
                 key={item.id}
-                onMouseEnter={() => setActiveCard(item.id)}
-                onMouseLeave={() => setActiveCard(null)}
-                className={`bento-service-card glass-card hover:border-brand-purple/40 p-8 rounded-3xl flex flex-col justify-between group transition-all duration-500 relative overflow-hidden ${spanClass}`}
-                style={{
-                  minHeight: "330px",
-                }}
+                className={`bento-service-card glass-card hover:border-brand-purple/40 p-8 rounded-3xl flex flex-col justify-between group transition-all duration-500 relative overflow-hidden transform-gpu ${spanClass} ${minHeightClass}`}
               >
                 {/* Diagonal glowing hover background */}
                 <div
-                  className={`absolute -inset-y-12 -left-12 w-48 bg-brand-purple/5 blur-[50px] transition-transform duration-700 ease-out pointer-events-none rounded-full ${
-                    activeCard === item.id ? "translate-x-32 translate-y-24 opacity-100 scale-150" : "opacity-0"
-                  }`}
+                  className="absolute -inset-y-12 -left-12 w-48 bg-brand-purple/5 blur-2xl transition-all duration-700 ease-out pointer-events-none rounded-full opacity-0 group-hover:translate-x-32 group-hover:translate-y-24 group-hover:opacity-100 group-hover:scale-150"
                 />
 
                 {/* Card Top: Sparkle & Badging */}

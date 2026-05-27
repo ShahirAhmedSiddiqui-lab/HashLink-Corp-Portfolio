@@ -2,51 +2,61 @@ import { ServiceItem, TeamMember, CaseStudy } from "./types";
 
 export const SERVICES_DATA: ServiceItem[] = [
   {
-    id: "ai-agents",
-    title: "AI & Cognitive Agents",
-    description: "Multi-agent orchestration, RAG architectures, and custom tool-connected assistants that perform complex business reasoning instead of generic chat.",
-    badge: "CORE ENGINE",
-    iconName: "Cpu",
-    tech: ["OpenAI API", "Claude", "LangChain", "Supabase vector", "Python/FastAPI"],
+    id: "3d-landing-pages",
+    title: "3D Interactive Landing Pages",
+    description: "Immersive web experiences featuring cutting-edge 3D visualizations, interactive product demos, and particle effects that captivate audiences and drive conversion rates through technical excellence.",
+    badge: "PREMIUM EXPERIENCE",
+    iconName: "Sparkles",
+    tech: ["Three.js", "Babel", "React Three Fiber", "GSAP", "WebGL"],
     gradient: "from-purple-600/20 to-violet-600/30"
   },
   {
-    id: "workflow-automation",
-    title: "Autonomous Workflows",
-    description: "Replace hours of manual spreadsheet work, email formatting, and data entry with production-ready background jobs, webhooks, and secure APIs.",
-    badge: "LEVERAGE",
-    iconName: "Workflow",
-    tech: ["n8n", "Make", "Zapier", "REST APIs", "Node.js", "Webhooks"],
-    gradient: "from-blue-600/20 to-cyan-600/30"
-  },
-  {
-    id: "saas-engineering",
-    title: "Custom SaaS MVP & Dashboards",
-    description: "Robust full-stack platforms with built-in payments, secure authentication, and complex analytics engines, engineered for validation in weeks.",
-    badge: "SCALE",
+    id: "saas-crm-dashboards",
+    title: "Custom SaaS MVPs & CRM Dashboards",
+    description: "Enterprise-grade platforms with intuitive interfaces, real-time data synchronization, secure multi-user access, and advanced analytics dashboards engineered for rapid market validation.",
+    badge: "SCALE READY",
     iconName: "Layers",
-    tech: ["React/Vite", "Node.js", "Express", "Supabase", "PostgreSQL", "Stripe"],
+    tech: ["React/Vite", "Node.js", "PostgreSQL", "Supabase", "Stripe", "Redis"],
     gradient: "from-emerald-600/20 to-teal-600/30"
   },
   {
-    id: "analytics-dashboards",
-    title: "Intelligence Dashboards",
-    description: "Stunning real-time visual reports tracking revenue metrics, sales pipeline, ticket volumes, and custom data streams using advanced charting.",
-    badge: "VISUALS",
-    iconName: "BarChart3",
-    tech: ["Recharts", "D3.js", "Tailwind CSS", "REST APIs", "SQL"],
-    gradient: "from-amber-600/20 to-orange-600/30"
+    id: "workflow-automation",
+    title: "Workflow Automation & Integration",
+    description: "Eliminate manual processes with intelligent automation pipelines that seamlessly integrate your existing tools, APIs, and databases for streamlined operational efficiency.",
+    badge: "LEVERAGE",
+    iconName: "Workflow",
+    tech: ["n8n", "Zapier", "Make", "REST APIs", "Node.js", "Webhooks"],
+    gradient: "from-blue-600/20 to-cyan-600/30"
   },
   {
-    id: "uiux-engineering",
-    title: "Luxury UI/UX Engineering",
-    description: "Masterful high-fidelity designs, micro-animations, fluid layout transitions, and conversion-centered landing pages built desktop-first with ultimate mobile fluidity.",
-    badge: "PREMIUM",
-    iconName: "Sparkles",
-    tech: ["Framer Motion", "Tailwind CSS", "Figma", "Satoshi & Syne"],
+    id: "ai-agents-chatbots",
+    title: "AI Agents & Custom Chatbots",
+    description: "Deploy sophisticated AI-powered assistants with advanced reasoning capabilities, context awareness, and multi-tool integration for customer support, lead qualification, and business automation.",
+    badge: "CORE ENGINE",
+    iconName: "Cpu",
+    tech: ["OpenAI GPT-4", "Claude", "LangChain", "Vector DB", "FastAPI"],
+    gradient: "from-orange-600/20 to-amber-600/30"
+  },
+  {
+    id: "seo-uiux-engineering",
+    title: "Programmatic SEO & UI/UX Engineering",
+    description: "Data-driven design systems optimized for search visibility and user engagement, combining conversion-centered UX patterns with technical SEO architecture for maximum discoverability.",
+    badge: "VISUALS + GROWTH",
+    iconName: "BarChart3",
+    tech: ["Framer Motion", "Tailwind CSS", "Next.js", "Schema Markup", "Analytics"],
     gradient: "from-fuchsia-600/20 to-pink-600/30"
+  },
+  {
+    id: "backend-infrastructure",
+    title: "Scalable Backend Infrastructure",
+    description: "Production-ready server architecture with microservices design, database optimization, caching layers, and deployment pipelines engineered for high availability and zero-downtime scaling.",
+    badge: "INFRASTRUCTURE",
+    iconName: "Database",
+    tech: ["Node.js", "Docker", "Kubernetes", "PostgreSQL", "Redis", "AWS/GCP"],
+    gradient: "from-red-600/20 to-rose-600/30"
   }
 ];
+
 
 export const MEMBERS_DATA: TeamMember[] = [
   {

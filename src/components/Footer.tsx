@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ArrowUp, Github, Linkedin, MessageSquare, ShieldCheck, Twitter } from "lucide-react";
+import { ArrowUp, Github, Instagram, Linkedin, ShieldCheck } from "lucide-react";
 import HashLinkLogo from "./HashLinkLogo";
 
 export default function Footer({ setCurrentPage }: { setCurrentPage: (page: "home" | "book-audit") => void }) {
@@ -24,7 +24,7 @@ export default function Footer({ setCurrentPage }: { setCurrentPage: (page: "hom
       {/* Laser Gradient Accent Line */}
       <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-brand-purple/50 to-transparent" />
 
-      <div className="max-w-[1440px] mx-auto px-[40px] grid grid-cols-1 md:grid-cols-12 gap-12 relative z-10">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-[40px] grid grid-cols-1 md:grid-cols-12 gap-12 relative z-10">
         {/* Brand Column */}
         <div className="md:col-span-5 flex flex-col justify-between gap-6">
           <div>
@@ -72,12 +72,12 @@ export default function Footer({ setCurrentPage }: { setCurrentPage: (page: "hom
               </li>
               <li>
                 <a href="#services" className="text-xs text-white/60 hover:text-white transition-colors py-1 block">
-                  Bento Services
+                  Our Services
                 </a>
               </li>
               <li>
                 <a href="#about" className="text-xs text-white/60 hover:text-white transition-colors py-1 block">
-                  Engineering Philosophy
+                  About Studio
                 </a>
               </li>
               <li>
@@ -104,11 +104,6 @@ export default function Footer({ setCurrentPage }: { setCurrentPage: (page: "hom
                 </button>
               </li>
               <li>
-                <a href="mailto:shahirsheikh936@gmail.com" className="text-xs text-white/60 hover:text-brand-purple transition-colors py-1 block">
-                  Engineering Hotline
-                </a>
-              </li>
-              <li>
                 <span className="text-xs text-white/40 font-mono py-1 block">
                   COORDINATES: UTC+5 / UTC-5
                 </span>
@@ -133,14 +128,14 @@ export default function Footer({ setCurrentPage }: { setCurrentPage: (page: "hom
 
           {/* Social connections */}
           <div className="flex items-center md:justify-end gap-3.5 mt-4">
-            <a href="https://github.com" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-lg border border-white/5 bg-white/2 hover:border-brand-purple hover:bg-brand-purple/10 flex items-center justify-center text-white/60 hover:text-white transition-all">
+            <a href="https://github.com/hashalink-Corporation" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-lg border border-white/5 bg-white/2 hover:border-brand-purple hover:bg-brand-purple/10 flex items-center justify-center text-white/60 hover:text-white transition-all" aria-label="HashLink GitHub">
               <Github className="w-4 h-4" />
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-lg border border-white/5 bg-white/2 hover:border-brand-purple hover:bg-brand-purple/10 flex items-center justify-center text-white/60 hover:text-white transition-all">
+            <a href="https://www.linkedin.com/in/hashlink-corp?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-lg border border-white/5 bg-white/2 hover:border-brand-purple hover:bg-brand-purple/10 flex items-center justify-center text-white/60 hover:text-white transition-all" aria-label="HashLink LinkedIn">
               <Linkedin className="w-4 h-4" />
             </a>
-            <a href="https://twitter.com" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-lg border border-white/5 bg-white/2 hover:border-brand-purple hover:bg-brand-purple/10 flex items-center justify-center text-white/60 hover:text-white transition-all">
-              <Twitter className="w-4 h-4" />
+            <a href="https://www.instagram.com/hashlink.corp?igsh=aWxncXI2enR2ZWFv" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-lg border border-white/5 bg-white/2 hover:border-brand-purple hover:bg-brand-purple/10 flex items-center justify-center text-white/60 hover:text-white transition-all" aria-label="HashLink Instagram">
+              <Instagram className="w-4 h-4" />
             </a>
           </div>
         </div>

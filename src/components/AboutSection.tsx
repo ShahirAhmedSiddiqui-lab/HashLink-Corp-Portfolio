@@ -12,6 +12,8 @@ export default function AboutSection() {
     if (!sectionRef.current || !headerTextRef.current || !cardsRef.current) return;
 
     const ctx = gsap.context(() => {
+      gsap.set(".about-card", { willChange: "transform, opacity" });
+
       // 1. Massive Editorial Typographic Reveal (Clip-Path)
       gsap.fromTo(
         headerTextRef.current,
@@ -30,7 +32,7 @@ export default function AboutSection() {
             trigger: sectionRef.current,
             start: "top 75%",
             end: "top 30%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           },
         }
       );
@@ -40,21 +42,24 @@ export default function AboutSection() {
       gsap.fromTo(
         cards,
         { 
-          y: 80, 
+          y: 64,
           opacity: 0, 
-          scale: 0.95 
+          scale: 0.98
         },
         {
           y: 0,
           opacity: 1,
           scale: 1,
-          duration: 1,
-          stagger: 0.1,
-          ease: "back.out(1.2)",
+          duration: 0.85,
+          stagger: 0.08,
+          ease: "power3.out",
+          onComplete: () => {
+            gsap.set(cards, { willChange: "auto" });
+          },
           scrollTrigger: {
             trigger: cardsRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
+            start: "top 85%",
+            toggleActions: "play none none none",
           },
         }
       );
@@ -84,9 +89,9 @@ export default function AboutSection() {
   return (
     <section id="about" ref={sectionRef} className="relative py-32 overflow-hidden bg-radial-grid border-t border-white/5">
       {/* Dynamic blurred lights backdrop */}
-      <div className="absolute right-0 top-1/3 w-[350px] h-[350px] bg-brand-purple/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute right-0 top-1/3 w-[320px] h-[320px] bg-brand-purple/5 rounded-full blur-[80px] pointer-events-none" />
 
-      <div className="max-w-[1440px] mx-auto px-[40px]">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-[40px]">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
           
           {/* Left Column: Mission, Large typography */}
@@ -109,7 +114,7 @@ export default function AboutSection() {
             </p>
 
             <p className="text-white/40 text-sm leading-relaxed font-light">
-              Our 4-member engineer collective operates globally, linking custom dashboard interfaces (Alex), intelligent agents (Satoru), creative directional visuals (Zoe), and systems strategy (Shahir) into one focused execution machine.
+              Our 4-member engineer collective operates globally, linking custom dashboard interfaces (Ahmed), intelligent agents (Naveed), creative directional visuals (Waqas), and systems strategy (Shahir) into one focused execution machine.
             </p>
 
             {/* Micro Details Log */}
@@ -143,7 +148,7 @@ export default function AboutSection() {
             {values.map((v, idx) => (
               <div
                 key={idx}
-                className="about-card glass-card hover:border-brand-purple/20 p-8 rounded-3xl group transition-all duration-300 relative border border-white/5"
+                className="about-card glass-card hover:border-brand-purple/20 p-8 rounded-3xl group transition-all duration-300 relative border border-white/5 transform-gpu"
               >
                 <div className="flex flex-col sm:flex-row gap-6">
                   {/* Floating value icon counter */}
