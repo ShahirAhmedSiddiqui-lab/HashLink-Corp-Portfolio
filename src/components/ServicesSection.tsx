@@ -130,12 +130,12 @@ export default function ServicesSection() {
                 />
 
                 {/* Card Top: Sparkle & Badging */}
-                <div className="flex items-start justify-between relative z-10 mb-6">
+                <div className="flex flex-col sm:flex-row items-start justify-between gap-4 relative z-10 mb-6">
                   <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-purple shadow-inner group-hover:scale-110 group-hover:bg-brand-purple/10 group-hover:border-brand-purple/30 transition-all duration-300">
                     {renderIcon(item.iconName, "w-5.5 h-5.5")}
                   </div>
-                  <span className="font-mono text-[9px] text-white/40 tracking-[0.2em] uppercase px-3 py-1 rounded-full border border-white/5 bg-white/1 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-brand-purple scale-75 animate-pulse" />
+                  <span className="max-w-full font-mono text-[9px] text-white/40 tracking-[0.16em] uppercase px-3 py-1 rounded-full border border-white/5 bg-white/1 flex items-center gap-1.5 leading-snug">
+                    <span className="w-1.5 h-1.5 shrink-0 rounded-full bg-brand-purple scale-75 animate-pulse" />
                     {item.badge}
                   </span>
                 </div>

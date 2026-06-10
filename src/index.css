@@ -71,6 +71,16 @@ body {
   font-family: var(--font-sans);
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+#root {
+  min-width: 0;
+}
+
 ::selection {
   background-color: #6C63FF;
   color: #FFFFFF;
@@ -197,6 +207,10 @@ body {
   /* Button responsive sizing */
   .btn-primary {
     @apply px-5 py-2.5 text-xs sm:px-7 sm:py-3;
+    max-width: 100%;
+    white-space: normal;
+    line-height: 1.35;
+    text-align: center;
   }
 
   .btn-primary:hover {
@@ -255,6 +269,17 @@ body {
   /* Heading responsive */
   h1, h2, h3, h4, h5, h6 {
     overflow-wrap: break-word;
+  }
+
+  p,
+  span,
+  a,
+  button,
+  label,
+  input,
+  textarea,
+  select {
+    min-width: 0;
   }
 
   /* Prevent overflow on small screens */
@@ -349,16 +374,11 @@ body {
 
 /* Responsive font mono */
 @media (max-width: 544px) {
-  .font-mono {
-    @apply text-xs sm:text-sm;
-  }
-
   .tracking-widest {
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
   }
 
   .tracking-wide {
     letter-spacing: 0.02em;
   }
 }
-

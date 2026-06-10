@@ -215,15 +215,9 @@ export default function HeroSection({ setCurrentPage }: HeroSectionProps) {
           {/* Left Column: Premium Editorial Content Layout */}
           <div className="lg:col-span-7 flex flex-col gap-8 text-left">
             
-            {/* Tagline micro-label (Lando Norris style upper caps spaced indicators) */}
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/2 backdrop-blur-md w-fit text-xs text-white/90 font-mono tracking-widest">
-              <span className="w-1.5 h-1.5 bg-brand-purple rounded-full animate-ping" />
-              B2B SYSTEMS ENGINEERING STUDIO // REV2026
-            </div>
-
             {/* Cinematic Large Display Header */}
             <div className="flex flex-col relative overflow-hidden pb-4">
-              <h2 ref={headerTextRef} className="font-display font-black text-[clamp(4rem,8vw,6rem)] leading-[0.95] tracking-tight text-white mb-2 select-text uppercase">
+              <h2 ref={headerTextRef} className="font-display font-black text-[clamp(2.25rem,11.5vw,4rem)] sm:text-[clamp(4rem,8vw,6rem)] leading-[1] sm:leading-[0.95] tracking-tight text-white mb-2 select-text uppercase">
                 WE ENGINEER <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-purple via-[#9F8EFF] to-cyan-300 drop-shadow-[0_0_30px_rgba(108,99,255,0.15)]">
                   OPERATIONAL
@@ -238,12 +232,12 @@ export default function HeroSection({ setCurrentPage }: HeroSectionProps) {
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-4 mt-2">
+            <div className="flex w-full flex-col sm:w-auto sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-4 mt-2">
               <button
                 onClick={() => {
                   setCurrentPage("book-audit");
                 }}
-                className="btn-primary group"
+                className="btn-primary group w-full sm:w-auto"
               >
                 Analyze Your Business
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform text-white" />
@@ -257,7 +251,7 @@ export default function HeroSection({ setCurrentPage }: HeroSectionProps) {
                     servicesSection.scrollIntoView({ behavior: "smooth" });
                   }
                 }}
-                className="px-7 py-3.5 rounded-full border border-white/10 bg-white/2 backdrop-blur-md hover:bg-white/5 hover:border-white/25 text-white text-xs font-mono uppercase tracking-widest transition-all duration-300 transform hover:-translate-y-1 flex items-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto justify-center px-5 sm:px-7 py-3.5 rounded-full border border-white/10 bg-white/2 backdrop-blur-md hover:bg-white/5 hover:border-white/25 text-white text-xs font-mono uppercase tracking-widest leading-snug text-center transition-all duration-300 transform hover:-translate-y-1 flex items-center gap-2 cursor-pointer"
               >
                 <Layers className="w-3.5 h-3.5 text-cyan-300" />
                 Explore Capabilities
@@ -265,7 +259,7 @@ export default function HeroSection({ setCurrentPage }: HeroSectionProps) {
             </div>
 
             {/* Handwritten CEO Signature Area (Inspired by Lando Norris signature decorations) */}
-            <div className="flex items-center gap-4 pt-4 border-t border-white/5 mt-2">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4 pt-4 border-t border-white/5 mt-2">
               <div className="flex flex-col">
                 <span className="text-[10px] font-mono text-white/40 tracking-widest uppercase">SYS_ARCHITECT_STAMP:</span>
                 <span className="text-xs text-white/75 font-sans font-light">Shaheer Siddiqui, Founder and CEO</span>

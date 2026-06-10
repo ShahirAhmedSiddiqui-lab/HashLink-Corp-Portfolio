@@ -168,10 +168,10 @@ export default function MembersSection() {
                 <div className="p-6 text-left flex-grow flex flex-col justify-between bg-gradient-to-b from-transparent to-[#04050d]/80">
                   <div>
                     {/* Name and Designation */}
-                    <h3 className="font-display font-black text-lg text-white tracking-tight mb-1 group-hover:text-cyan-300 transition-colors duration-300">
+                    <h3 className="font-display font-black text-lg text-white tracking-tight mb-1 group-hover:text-cyan-300 transition-colors duration-300 break-words">
                       {member.name}
                     </h3>
-                    <div className="font-mono text-[9px] text-[#9F8EFF] font-bold uppercase tracking-[0.16em] mb-4">
+                    <div className="font-mono text-[9px] text-[#9F8EFF] font-bold uppercase tracking-[0.12em] leading-snug mb-4">
                       {member.role}
                     </div>
                     
@@ -199,7 +199,7 @@ export default function MembersSection() {
                   </div>
   
                   {/* Spikes reference indicators */}
-                  <div className="pt-4 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-white/30">
+                  <div className="pt-4 border-t border-white/5 flex flex-wrap items-center justify-between gap-2 text-[10px] font-mono text-white/30">
                     <div className="flex items-center gap-1.5">
                       <Calendar className="w-3.5 h-3.5 text-brand-purple" />
                       <span>{member.timezone}</span>

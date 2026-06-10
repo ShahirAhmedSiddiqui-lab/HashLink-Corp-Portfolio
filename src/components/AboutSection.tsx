@@ -122,7 +122,7 @@ export default function AboutSection() {
               <span className="font-mono text-[9px] text-white/40 tracking-widest block mb-4 uppercase">
                 / SQUAD METRICS LOG
               </span>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <div className="text-xs text-white/50 font-mono mb-1">COORDINATES</div>
                   <div className="text-sm font-semibold text-white">Global Remote</div>
@@ -156,7 +156,7 @@ export default function AboutSection() {
                     {idx + 1}
                   </div>
                   <div className="flex flex-col gap-2">
-                    <h3 className="font-display font-bold text-lg text-white group-hover:text-brand-purple transition-colors duration-200">
+                    <h3 className="font-display font-bold text-lg text-white group-hover:text-brand-purple transition-colors duration-200 break-words">
                       {v.title}
                     </h3>
                     <p className="text-sm text-white/50 leading-relaxed font-light">

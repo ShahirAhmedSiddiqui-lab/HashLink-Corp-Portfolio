@@ -191,7 +191,7 @@ export default function BookAuditPage() {
               Blueprint Your Leverage
             </h2>
           </div>
-          <p className="text-[#D1D5DB]/60 tracking-wide text-lg leading-relaxed font-light">
+          <p className="text-[#D1D5DB]/60 tracking-wide text-base sm:text-lg leading-relaxed font-light">
             Skip the generic marketing calls. Feed our engine your core back-office friction points below, and watch our artificial architect compute custom ROI calculations and compile a draft blueprint proposal immediately.
           </p>
         </div>
@@ -250,7 +250,7 @@ export default function BookAuditPage() {
                 </div>
 
                 {/* Grid inputs */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Industry */}
                   <div className="flex flex-col gap-2">
                     <label className="font-mono text-[10px] text-white/60 uppercase tracking-wider mb-2">
@@ -350,7 +350,7 @@ export default function BookAuditPage() {
 
           {/* Right Column: AI Output Strategy Deck console */}
           <div className="lg:col-span-7 text-left">
-            <div className="glass-card border border-white/10 rounded-3xl p-8 min-h-[520px] flex flex-col justify-center relative bg-bg-card/40 overflow-hidden">
+            <div className="glass-card border border-white/10 rounded-3xl p-5 sm:p-8 min-h-[520px] flex flex-col justify-center relative bg-bg-card/40 overflow-hidden">
               
               {/* If loading */}
               {isLoading && (
@@ -400,7 +400,7 @@ export default function BookAuditPage() {
                     <div className="font-mono text-[9px] text-white/30 tracking-widest uppercase mb-4">
                       COMPUTED_IMPACT_METRICS_MATRIX
                     </div>
-                    <div className="grid grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       <div className="p-4 rounded-xl bg-brand-purple/10 border border-brand-purple/20">
                         <div className="font-mono text-[9px] text-white/40 tracking-wider mb-1 lowercase">hours_saved/wk</div>
                         <div className="font-display font-black text-2xl text-brand-purple">{auditResult.estimatedReturn.hoursSavedWeekly} hrs</div>
@@ -434,9 +434,9 @@ export default function BookAuditPage() {
                     <div className="space-y-4">
                       {auditResult.findings.map((f, i) => (
                         <div key={i} className="p-5 border border-white/5 bg-white/1 rounded-2xl">
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="text-sm font-bold text-white uppercase tracking-tight">{f.issue}</span>
-                            <span className={`font-mono text-[8.5px] px-2 py-0.5 rounded uppercase tracking-widest ${
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                            <span className="text-sm font-bold text-white uppercase tracking-tight break-words">{f.issue}</span>
+                            <span className={`w-fit shrink-0 font-mono text-[8.5px] px-2 py-0.5 rounded uppercase tracking-widest ${
                               f.complexity === "Low" ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" : 
                               f.complexity === "Medium" ? "bg-amber-500/10 text-amber-400 border border-amber-500/20" :
                               "bg-rose-500/10 text-rose-400 border border-rose-500/20"
@@ -469,7 +469,7 @@ export default function BookAuditPage() {
                             <div className="text-xs font-bold text-white mb-1 tracking-tight">{step.label}</div>
                             <p className="text-[10.5px] text-white/50 leading-relaxed font-light">{step.description}</p>
                           </div>
-                          <div className="mt-3 pt-2.5 border-t border-white/5 font-mono text-[9px] text-cyan-400 uppercase tracking-widest leading-none">
+                          <div className="mt-3 pt-2.5 border-t border-white/5 font-mono text-[9px] text-cyan-400 uppercase tracking-widest leading-tight">
                             {step.systemUsed}
                           </div>
                         </div>
@@ -479,13 +479,13 @@ export default function BookAuditPage() {
 
                   {/* Proposal Markdown Draft section */}
                   <div>
-                    <div className="flex justify-between items-center mb-4 pb-2 border-b border-white/5">
+                    <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mb-4 pb-2 border-b border-white/5">
                       <div className="font-mono text-[9px] text-white/30 tracking-widest uppercase">
                         COMPILED_MARKDOWN_PROPOSAL_DRAFT
                       </div>
                       <button
                         onClick={copyProposalToClipboard}
-                        className="font-mono text-[9px] uppercase tracking-widest text-brand-purple hover:text-white transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded bg-brand-purple/5 border border-brand-purple/10 cursor-pointer"
+                        className="w-fit max-w-full font-mono text-[9px] uppercase tracking-widest text-brand-purple hover:text-white transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded bg-brand-purple/5 border border-brand-purple/10 cursor-pointer leading-snug"
                       >
                         {copied ? (
                           <>
@@ -500,7 +500,7 @@ export default function BookAuditPage() {
                         )}
                       </button>
                     </div>
-                    <div className="p-6 bg-[#04060d]/80 border border-white/5 rounded-2xl max-h-[30rem] overflow-y-auto text-left select-text">
+                    <div className="p-4 sm:p-6 bg-[#04060d]/80 border border-white/5 rounded-2xl max-h-[30rem] overflow-y-auto text-left select-text">
                       {renderProposalMarkdown(auditResult.draftProposal)}
                     </div>
                   </div>
@@ -516,7 +516,7 @@ export default function BookAuditPage() {
                       href={gmailBookingUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="px-6 py-3 shrink-0 rounded-xl bg-brand-purple hover:bg-opacity-95 text-white font-mono text-xs uppercase tracking-widest shadow-md transition-all flex items-center gap-2"
+                      className="w-full md:w-auto justify-center px-6 py-3 shrink-0 rounded-xl bg-brand-purple hover:bg-opacity-95 text-white font-mono text-xs uppercase tracking-widest leading-snug text-center shadow-md transition-all flex items-center gap-2"
                     >
                       Lock In Booking Slot
                       <ArrowRight className="w-3.5 h-3.5" />

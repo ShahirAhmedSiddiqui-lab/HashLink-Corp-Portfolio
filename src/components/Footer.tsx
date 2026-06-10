@@ -46,7 +46,7 @@ export default function Footer({ setCurrentPage }: { setCurrentPage: (page: "hom
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
               </span>
-              <span className="font-mono text-[10px] text-white/80 tracking-widest uppercase">
+              <span className="font-mono text-[10px] text-white/80 tracking-widest uppercase leading-snug">
                 STATUS: ACTIVE & BOOKING
               </span>
             </div>
@@ -59,7 +59,7 @@ export default function Footer({ setCurrentPage }: { setCurrentPage: (page: "hom
         </div>
 
         {/* Directory Columns */}
-        <div className="md:col-span-4 grid grid-cols-2 gap-8">
+        <div className="md:col-span-4 grid grid-cols-1 sm:grid-cols-2 gap-8">
           <div>
             <span className="font-mono text-[10px] text-white/30 tracking-widest uppercase mb-4 block">
               SYSTEM ROOT
@@ -143,11 +143,11 @@ export default function Footer({ setCurrentPage }: { setCurrentPage: (page: "hom
 
       {/* Baseline credits */}
       <div className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/30 font-mono">
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5 leading-snug">
           <ShieldCheck className="w-4 h-4 text-brand-purple" />
           <span>HASHLINK CORP. © 2026. CORE ENGINE ONLINE.</span>
         </div>
-        <div className="flex items-center gap-6">
+        <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
           <span className="hover:text-white transition-colors cursor-pointer">TERMS_OF_SEC</span>
           <span className="hover:text-white transition-colors cursor-pointer mr-2">CREDITS</span>
           <button onClick={scrollToTop} className="p-2 border border-white/5 bg-white/2 hover:border-brand-purple hover:text-white transition-all rounded">

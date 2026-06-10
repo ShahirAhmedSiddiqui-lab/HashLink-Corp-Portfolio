@@ -95,15 +95,15 @@ export default function CaseStudiesSection() {
                       : "bg-white/2 border-white/5 hover:border-white/15 hover:bg-white/5"
                   }`}
                 >
-                  <div className="flex flex-col gap-1 z-10">
-                    <span className="font-mono text-[8.5px] tracking-widest text-brand-purple uppercase font-semibold">
+                  <div className="min-w-0 flex flex-col gap-1 z-10 pr-3">
+                    <span className="font-mono text-[8.5px] tracking-widest text-brand-purple uppercase font-semibold leading-snug">
                       {cs.category}
                     </span>
-                    <span className="font-display font-bold text-base text-white group-hover:text-brand-purple transition-colors">
+                    <span className="font-display font-bold text-base text-white group-hover:text-brand-purple transition-colors break-words">
                       {cs.concept}
                     </span>
                   </div>
-                  <Eye className={`w-4 h-4 z-10 transition-transform duration-300 ${isActive ? "text-brand-purple scale-110" : "text-white/20 group-hover:text-white/40 group-hover:scale-105"}`} />
+                  <Eye className={`w-4 h-4 shrink-0 z-10 transition-transform duration-300 ${isActive ? "text-brand-purple scale-110" : "text-white/20 group-hover:text-white/40 group-hover:scale-105"}`} />
                   
                   {/* Subtle active border light */}
                   {isActive && (
@@ -117,7 +117,7 @@ export default function CaseStudiesSection() {
           {/* Right Panel: Large detailed interactive screen */}
           <div className="lg:col-span-8">
             <div 
-              className={`glass-card border border-white/10 rounded-3xl p-8 md:p-10 text-left relative overflow-hidden bg-bg-card/40 transition-all duration-300 ${
+              className={`glass-card border border-white/10 rounded-3xl p-5 sm:p-8 md:p-10 text-left relative overflow-hidden bg-bg-card/40 transition-all duration-300 ${
                 isTransitioning ? "opacity-35 scale-[0.99] translate-y-1" : "opacity-100 scale-100 translate-y-0"
               }`}
             >
@@ -126,17 +126,17 @@ export default function CaseStudiesSection() {
               <div className="absolute top-0 right-0 w-72 h-72 bg-brand-purple/5 blur-[70px] rounded-full pointer-events-none" />
 
               {/* Lab Header meta */}
-              <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-white/5 mb-8">
-                <div>
-                  <div className="font-mono text-[10px] text-brand-purple uppercase tracking-[0.2em] mb-1 font-semibold flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-brand-purple scale-90 animate-pulse" />
+              <div className="flex flex-wrap items-start justify-between gap-4 pb-6 border-b border-white/5 mb-8">
+                <div className="min-w-0">
+                  <div className="font-mono text-[10px] text-brand-purple uppercase tracking-[0.16em] mb-1 font-semibold flex items-center gap-2 leading-snug">
+                    <span className="w-1.5 h-1.5 shrink-0 rounded-full bg-brand-purple scale-90 animate-pulse" />
                     {activeCase.category}
                   </div>
-                  <h3 className="font-display font-black text-2xl md:text-3.5xl text-white uppercase tracking-tight">
+                  <h3 className="font-display font-black text-2xl md:text-3.5xl text-white uppercase tracking-tight break-words">
                     {activeCase.title}
                   </h3>
                 </div>
-                <div className="px-4 py-2 rounded-xl bg-white/2 border border-white/5 font-mono text-[10px] text-white/60 tracking-wider">
+                <div className="max-w-full px-4 py-2 rounded-xl bg-white/2 border border-white/5 font-mono text-[10px] text-white/60 tracking-wider leading-snug break-words">
                   INST_REF: CS_{activeCase.id.toUpperCase()}_REV2
                 </div>
               </div>
@@ -206,7 +206,7 @@ export default function CaseStudiesSection() {
                       <div className="font-display font-black text-2xl md:text-3.5xl text-brand-purple mb-1 tracking-tight">
                         {met.value}
                       </div>
-                      <div className="font-mono text-[9.5px] text-white/40 tracking-wider uppercase leading-none">
+                      <div className="font-mono text-[9.5px] text-white/40 tracking-wider uppercase leading-tight">
                         {met.label}
                       </div>
                     </div>
